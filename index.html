@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>数字图片搜索</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+        }
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        input {
+            padding: 12px 20px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #imageResult {
+            margin-top: 30px;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>数字图片搜索器</h1>
+        <input type="text" id="numberInput" placeholder="请输入如 5.5 的格式">
+        <br>
+        <button onclick="showImage()">搜索图片</button>
+        <div id="imageContainer">
+            <img id="imageResult" src="" alt="结果图片">
+        </div>
+    </div>
+
+    <script>
+        // 内置的示例图片映射表
+        const imageMap = {
+            '1.0': 'https://picsum.photos/500/300?random=1',
+            '1.5': 'https://picsum.photos/500/300?random=2',
+            '2.0': 'https://picsum.photos/500/300?random=3',
+            '2.5': 'https://picsum.photos/500/300?random=4',
+            '3.0': 'https://picsum.photos/500/300?random=5',
+            // 可以继续添加更多映射...
+        };
+
+        function showImage() {
+            const input = document.getElementById('numberInput').value;
+            const imgElement = document.getElementById('imageResult');
+            
+            // 验证输入格式
+            if (!/^\d+\.\d$/.test(input)) {
+                alert("请输入正确格式（例如：3.5）");
+                return;
+            }
+
+            // 查找对应的图片（演示用随机图）
+            imgElement.src = imageMap[input] || 
+                            `https://picsum.photos/500/300?random=${Math.floor(Math.random()*100)}`;
+            
+            imgElement.onload = () => {
+                imgElement.style.display = 'block';
+            }
+        }
+
+        // 支持回车键触发
+        document.getElementById('numberInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') showImage();
+        });
+    </script>
+</body>
+</html>
